@@ -1,0 +1,68 @@
+package IMPORT_0.app.services.user.usermanagement;
+
+import IMPORT_0.app.configuration.IMPORT_1.PasswordEncoderConfig;
+import IMPORT_0.app.IMPORT_2.IMPORT_3.interfaces.IMPORT_4;
+import IMPORT_0.app.IMPORT_2.IMPORT_5.IMPORT_6;
+import IMPORT_0.app.services.user.exception.InvalidPasswordException;
+import IMPORT_0.app.services.user.exception.InvalidValueException;
+import IMPORT_0.app.services.user.usermanagement.IMPORT_7.IMPORT_8;
+import IMPORT_0.app.services.user.usermanagement.IMPORT_7.UserPasswordDTO;
+import org.junit.IMPORT_9;
+import org.junit.IMPORT_10;
+import org.junit.runner.RunWith;
+import org.mockito.Matchers;
+import org.mockito.IMPORT_11;
+import org.mockito.MockitoAnnotations;
+import org.IMPORT_12.beans.factory.annotation.Autowired;
+import org.IMPORT_12.IMPORT_13.test.mock.mockito.IMPORT_14;
+import org.IMPORT_12.test.IMPORT_15.ContextConfiguration;
+import org.IMPORT_12.test.IMPORT_15.junit4.SpringJUnit4ClassRunner;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(VAR_0 = {CLASS_0.class, IMPORT_4.class, PasswordEncoderConfig.class})
+public class UserManagementServiceImplTest {
+
+    @Autowired
+    UserManagementService VAR_1;
+
+    @IMPORT_14
+    IMPORT_4 VAR_2;
+
+    @IMPORT_9
+    public void setUp() {
+        IMPORT_6 VAR_3 = new IMPORT_6();
+        VAR_3.FUNC_0("<PASSWORD>");
+        MockitoAnnotations.initMocks(this);
+        IMPORT_11.when(VAR_2.findByEmail(Matchers.any(String.class))).thenReturn(VAR_3);
+    }
+
+    @IMPORT_10(expected = InvalidPasswordException.class)
+    public void FUNC_1() throws Exception {
+        UserPasswordDTO changeUserPasswordDTO = new UserPasswordDTO("", "", "<PASSWORD>", "<PASSWORD>");
+        VAR_1.changePassword(changeUserPasswordDTO);
+    }
+
+    @IMPORT_10
+    public void FUNC_2() throws Exception {
+        UserPasswordDTO changeUserPasswordDTO = new UserPasswordDTO("", "<PASSWORD>", "<PASSWORD>", "<PASSWORD>");
+        VAR_1.changePassword(changeUserPasswordDTO);
+    }
+
+    @IMPORT_10(expected = InvalidPasswordException.class)
+    public void ifOldPasswordIsWrongRaiseException() throws Exception {
+        UserPasswordDTO VAR_4 = new UserPasswordDTO("", <PASSWORD>", "<PASSWORD>", "<PASSWORD>");
+        userManagementService.changePassword(userPasswordDTO);
+    }
+
+    @Test(expected = InvalidValueException.class)
+    public void ifSomeDetailIsNullorEmptyRaiseException() throws Exception {
+        UserDetailsDTO userDetailsDTO = new UserDetailsDTO("", "Nowak", "");
+        VAR_1.FUNC_3(VAR_5);
+    }
+
+    @IMPORT_10
+    public void FUNC_4() throws Exception {
+        IMPORT_8 VAR_5 = new IMPORT_8("Jan", "Nowak", "");
+        VAR_1.FUNC_3(VAR_5);
+    }
+}

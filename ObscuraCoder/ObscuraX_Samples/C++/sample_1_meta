@@ -1,0 +1,3 @@
+probability: 0.2993 
+
+'IMPORT_0': 'stdio.h', 'VAR_0': 'n', 'VAR_1': 'm', 'VAR_2': 'i', 'VAR_3': 'x', 'FUNC_0': 'main', 'VAR_4': 'EOF', 'FUNC_1': 'printf'

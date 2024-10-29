@@ -1,0 +1,76 @@
+mamba activate Env
+
+model=$1
+
+python /Code/Clone+Defect_Detection.py \
+--model_name_or_path "$model" \
+--token "HF_TOKEN" \
+--wandb_token "WANDB_TOKEN" \
+--dataset_name "code-classification" \
+--dataset_config_name "clone-detection" \
+--text_column_names "source_code" \
+--project_name "Obscura" \
+--run_name "clone-detection-$model-test" \
+--output_dir "/Outputs/CodeClas/clone-detection/$model/" \
+--do_train True \
+--do_predict True \
+--trust_remote_code True \
+--num_train_epochs 2.0 \
+--per_device_train_batch_size 32 \
+--per_device_eval_batch_size 32 \
+--gradient_accumulation_steps 8 \
+--max_eval_samples 16384 \
+--evaluation_strategy "epoch" \
+--save_strategy "epoch" \
+--optim "adamw_torch_fused" \
+--learning_rate 5e-5 \
+--weight_decay 0. \
+--warmup_ratio 0.05 \
+--lr_scheduler_type "cosine" \
+--logging_steps 200 \
+--dataloader_drop_last True \
+--dataloader_num_workers 4 \
+--dataloader_pin_memory True \
+--dataloader_persistent_workers True \
+--ddp_find_unused_parameters False \
+--max_seq_length 1024 \
+--llm_int8_threshold 6.0 \
+--lora_alpha 8 \
+--lora_r 16 \
+--lora_dropout 0.1
+
+python /Code/Clone+Defect_Detection.py \
+--model_name_or_path "$model" \
+--token "HF_TOKEN" \
+--wandb_token "WANDB_TOKEN" \
+--dataset_name "code-classification" \
+--dataset_config_name "defect-detection" \
+--text_column_names "source_code" \
+--project_name "Obscura" \
+--run_name "defect-detection-$model-test" \
+--output_dir "/Outputs/CodeClas/defect-detection/$model/" \
+--do_train True \
+--do_predict True \
+--trust_remote_code True \
+--num_train_epochs 20.0 \
+--per_device_train_batch_size 32 \
+--per_device_eval_batch_size 32 \
+--gradient_accumulation_steps 8 \
+--evaluation_strategy "epoch" \
+--save_strategy "epoch" \
+--optim "adamw_torch_fused" \
+--learning_rate 5e-5 \
+--weight_decay 0. \
+--warmup_ratio 0.05 \
+--lr_scheduler_type "cosine" \
+--logging_steps 200 \
+--dataloader_drop_last True \
+--dataloader_num_workers 4 \
+--dataloader_pin_memory True \
+--dataloader_persistent_workers True \
+--ddp_find_unused_parameters False \
+--max_seq_length 1024 \
+--llm_int8_threshold 6.0 \
+--lora_alpha 8 \
+--lora_r 16 \
+--lora_dropout 0.1

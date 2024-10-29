@@ -1,0 +1,51 @@
+package cmd
+
+import (
+	"IMPORT_0"
+	"os"
+)
+
+type ID_0 struct {
+	anchor, packName, fileName string
+	okMessage                  string
+	template                   CLASS_1
+}
+
+type filesList []CLASS_0
+
+func (fl filesList) Process() error {
+	for _, VAR_0 := range fl {
+		err := VAR_0.performCreation()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Performs creation based on the subcommand passed
+func (VAR_1 CLASS_0) performCreation() error {
+	if err := VAR_1.createFile(); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Creates the based on the construction
+// passed on the gootstrap file
+func (VAR_1 CLASS_0) createFile() error {
+
+	// Creates the file and defer its closing
+	VAR_2, err := os.Create(VAR_1.fileName)
+	if err != nil {
+		return err
+	}
+	defer VAR_2.Close()
+
+	// Writes the template into file and
+	// then, writes the output to os.Stdout.
+	VAR_2.FUNC_0(VAR_1.template.Parse())
+	IMPORT_0.Println(VAR_1.okMessage)
+
+	return nil
+}

@@ -1,0 +1,17 @@
+//! Blocking CAN API
+
+/// A blocking CAN interface that is able to transmit and receive frames.
+pub trait Can {
+    /// Associated frame type.
+    type CLASS_0: crate::IMPORT_0::CLASS_0;
+
+    /// Associated error type.
+    type CLASS_1: crate::IMPORT_0::CLASS_1;
+
+    /// Puts a frame in the transmit buffer. Blocks until space is available in
+    /// the transmit buffer.
+    fn transmit(&mut self, frame: &IMPORT_1::CLASS_0) -> CLASS_2<(), IMPORT_1::CLASS_1>;
+
+    /// Blocks until a frame was received or an error occured.
+    fn receive(&mut self) -> CLASS_2<IMPORT_1::CLASS_0, IMPORT_1::CLASS_1>;
+}

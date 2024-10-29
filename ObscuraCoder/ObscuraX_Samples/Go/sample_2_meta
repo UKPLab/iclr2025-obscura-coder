@@ -1,0 +1,3 @@
+probability: 0.3883
+
+'IMPORT_0': 'fmt', 'ID_0': 'gootFile', 'CLASS_0': 'gootFile', 'CLASS_1': 'Parseble', 'VAR_0': 'file', 'VAR_1': 'gf', 'VAR_2': 'fileCreate', 'FUNC_0': 'WriteString'

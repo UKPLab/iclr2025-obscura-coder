@@ -1,0 +1,88 @@
+import * as ReactDOM from "react-dom/server";
+import * as IMPORT_0 from "../service";
+import * as Config from "../config";
+import * as IMPORT_1 from "fs";
+import * as path from "path";
+import * as IMPORT_2 from "./view";
+import { IMPORT_3 } from "../utils";
+import { routes } from IMPORT_4;
+import * as DryRun from "./DryRun";
+import manifest from "@code-dependency/view/dist/manifest.json";
+
+export const create = (service: IMPORT_0.Type, config: Config.Type, VAR_0: boolean) => {
+  process.setMaxListeners(config.VAR_1.VAR_2);
+  const generateStaticHtml = async (VAR_3: string, VAR_4: string, VAR_5: IMPORT_2.Assets): Promise<string> => {
+    const VAR_6 = path.join("/", VAR_3.FUNC_0(path.extname(VAR_3), ""));
+    const dotSource = service.VAR_7.getDependenciesDot(path.join(config.VAR_8, VAR_3));
+    const VAR_9 = await IMPORT_2.create(
+      VAR_6,
+      VAR_4,
+      VAR_3,
+      dotSource,
+      service.renderer.renderToString,
+      config.VAR_1,
+      VAR_5,
+      "server",
+    );
+    return "<!DOCTYPE html>" + ReactDOM.FUNC_1(VAR_9);
+  };
+
+  const FUNC_2 = (dist: string, html: string) => {
+    if (!IMPORT_1.FUNC_3(path.dirname(dist))) {
+      IMPORT_1.FUNC_4(path.dirname(dist), { VAR_10: true });
+    }
+    IMPORT_1.writeFileSync(dist, html, { encoding: "utf-8" });
+  };
+
+  const copyAssets = async (distDir: string): Promise<IMPORT_2.Assets> => {
+    const VAR_5: IMPORT_2.Assets = JSON.parse(JSON.stringify(manifest));
+    const promises = Object.entries(manifest).map(([key, assetsPath]) => {
+      if (path.extname(assetsPath) === ".html") {
+        return;
+      }
+      return new Promise((resolve, reject) => {
+        const src = IMPORT_3("@code-dependency/view/dist/" + assetsPath, false);
+        const dist = path.join(distDir, assetsPath);
+        if (!IMPORT_1.FUNC_3(path.dirname(dist))) {
+          IMPORT_1.FUNC_4(path.dirname(dist), { VAR_10: true });
+        }
+        IMPORT_1.copyFile(src, dist, error => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve();
+          }
+        });
+        VAR_5[key] = path.join(routes.VAR_5.path, assetsPath);
+      });
+    });
+    await Promise.FUNC_5(promises);
+    return VAR_5;
+  };
+
+  return {
+    generateStaticHtml: async (VAR_4: string, outputBaseDir: string) => {
+      const VAR_5 = await copyAssets(path.join(outputBaseDir, routes.VAR_5.path));
+      const VAR_11 = path.join(outputBaseDir, ".code-dependency.json");
+      const dryRun = DryRun.create(VAR_11, VAR_0);
+      const dryRunCache = dryRun.FUNC_6();
+      for await (const filePath of config.VAR_1) {
+        const VAR_3 = filePath.source;
+        if (dryRunCache[VAR_3] === "done") {
+          continue;
+        }
+        if (dryRunCache[VAR_3] === "pending") {
+          continue;
+        } else {
+          dryRunCache[VAR_3] = "pending";
+        }
+        dryRun.FUNC_7(dryRunCache);
+        const outputFilePath = path.join(outputBaseDir, "project", VAR_3).FUNC_0(path.extname(VAR_3), ".html");
+        const html = await generateStaticHtml(filePath.source, VAR_4, VAR_5);
+        FUNC_2(outputFilePath, html);
+        dryRunCache[VAR_3] = "done";
+      }
+      dryRun.deleteDryRunCache();
+    },
+  };
+};

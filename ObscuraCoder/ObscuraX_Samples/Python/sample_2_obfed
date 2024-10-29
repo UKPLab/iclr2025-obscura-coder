@@ -1,0 +1,51 @@
+# -*- coding: utf-8 -*-
+from __future__ import IMPORT_0, IMPORT_1, IMPORT_2
+import sys, os.IMPORT_3
+
+VAR_0 = "VisitorBase parse check".FUNC_0()
+
+VAR_1 = os.IMPORT_3.FUNC_1(os.IMPORT_3.FUNC_2(VAR_2))
+VAR_3 = None
+common_path = os.IMPORT_3.FUNC_1(VAR_1, 'common')
+
+def _get_asdl_depending_on_version():
+    '''Export names in the correct asdl.py depending on the python version.
+    '''
+
+    global VAR_3
+    VAR_4, VAR_5 = sys.VAR_6[0], sys.VAR_6[1]
+    # Assumes that specific-path and common-path are a subdirectory
+    # Build an absolute module path.
+    VAR_7 = VAR_8.FUNC_3('.', 1)
+    # The else-case is for running tests in the current directory
+    base = (VAR_7[0] + '.') if FUNC_4(VAR_7) > 1 else ''
+    VAR_9 = 'py%d_%d' % (VAR_4, VAR_5)
+    VAR_3 = os.IMPORT_3.FUNC_1(VAR_1, VAR_9)
+
+    VAR_10 = 0
+
+    VAR_11 = base + VAR_9 + '.asdl'
+    try:
+        # try to import from version specific directory
+        VAR_12 = FUNC_5(VAR_11, VAR_13=VAR_0, VAR_14=VAR_10)
+    except VAR_15:
+        # fallback to import from common directory
+        VAR_9 = 'common'
+        VAR_11 = base + VAR_9 + '.asdl'
+        VAR_12 = FUNC_5(VAR_11, VAR_13=VAR_0) #, level=use_rel_and_abs)
+    for VAR_16 in VAR_0:
+        FUNC_6()[VAR_16] = FUNC_7(VAR_12, VAR_16)
+
+def FUNC_8(VAR_17):
+    '''Load ASDL from the version_specific_path if exists,
+    or from the generic_path.
+    '''
+    VAR_18 = os.IMPORT_3.FUNC_1(VAR_3, VAR_17)
+    if not os.IMPORT_3.FUNC_9(VAR_18):
+        VAR_18 = os.IMPORT_3.FUNC_1(common_path, VAR_17)
+    VAR_19 = FUNC_10(VAR_18)
+    assert FUNC_11(VAR_19), "Invalid asdl %s" % VAR_18
+    return VAR_19
+
+# initialize
+_get_asdl_depending_on_version()

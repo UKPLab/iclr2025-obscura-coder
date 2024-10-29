@@ -1,0 +1,24 @@
+def FUNC_0(VAR_0, VAR_1):
+        VAR_0._unbound = [i for i in VAR_0._all_samples if VAR_0._is_unbound(i)]
+        if FUNC_1(VAR_0.VAR_2) > 0:
+            VAR_3 = VAR_0._error.copy().tolist()
+            tmp_error_dict = {
+                VAR_4: value
+                for VAR_4, value in enumerate(VAR_3)
+                if VAR_0._is_unbound(VAR_4)
+            }
+            if VAR_0.FUNC_2(VAR_1) >= 0:
+                VAR_5 = FUNC_3(tmp_error_dict, key=lambda VAR_4: tmp_error_dict[VAR_4])
+            else:
+                VAR_5 = FUNC_4(tmp_error_dict, key=lambda VAR_4: tmp_error_dict[VAR_4])
+            VAR_6 = yield VAR_1, VAR_5
+            if VAR_6 is None:
+                return
+        for VAR_5 in np.roll(VAR_0.VAR_2, np.random.choice(VAR_0.VAR_7)):
+            VAR_6 = yield VAR_1, VAR_5
+            if VAR_6 is None:
+                return
+        for VAR_5 in np.roll(VAR_0._all_samples, np.random.choice(VAR_0.VAR_7)):
+            VAR_6 = yield VAR_1, VAR_5
+            if VAR_6 is None:
+                return

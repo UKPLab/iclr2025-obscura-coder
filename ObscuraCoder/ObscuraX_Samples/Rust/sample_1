@@ -1,0 +1,41 @@
+/// Generate an encrypted header
+/// for a resource encrypted using an hybrid crypto scheme.
+///
+/// A random symmetric key is generated for the specified symmetric scheme,
+/// encrypted using the public key of the ABE scheme and policy attributes
+/// then pre-pended to the symmetrically encrypted metadata
+pub fn encrypt_hybrid_header<A, S>(
+    policy: &Policy,
+    public_key: &A::MasterPublicKey,
+    attributes: &[Attribute],
+    meta_data: Option<Metadata>,
+) -> Result<EncryptedHeader<S>, FormatErr>
+where
+    A: AbeScheme + std::marker::Sync + std::marker::Send,
+    S: SymmetricCrypto,
+{
+    let engine = Engine::<A>::new();
+    let (sk_bytes, encrypted_sk) =
+        engine.generate_symmetric_key(policy, public_key, attributes, S::Key::LENGTH)?;
+    let symmetric_key = S::Key::try_from_bytes(sk_bytes)?;
+    // convert to bytes
+    // ..size
+    let mut header_bytes = u32_len(&encrypted_sk)?.to_vec();
+    // ...bytes
+    header_bytes.extend(&encrypted_sk);
+    if let Some(meta) = meta_data {
+        // Nonce
+        let nonce = S::Nonce::new(&mut CsRng::new());
+        header_bytes.extend(nonce.to_bytes());
+        // Encrypted metadata
+        let encrypted_metadata = S::encrypt(&symmetric_key, &meta.to_bytes()?, &nonce, None)?;
+        // ... size
+        header_bytes.extend(u32_len(&encrypted_metadata)?);
+        // ... bytes
+        header_bytes.extend(encrypted_metadata);
+    }
+    Ok(EncryptedHeader {
+        symmetric_key,
+        encrypted_header_bytes: header_bytes,
+    })
+}

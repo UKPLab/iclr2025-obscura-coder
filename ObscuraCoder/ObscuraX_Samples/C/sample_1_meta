@@ -1,0 +1,2 @@
+probability: 0.5722095368813965
+'CLASS_0': 'ush_object', 'FUNC_0': 'USH_ASSERT', 'VAR_0': 'echo', 'VAR_1': 'io', 'FUNC_1': 'read', 'FUNC_2': 'ush_write_pointer', 'FUNC_3': 'ush_read_char_by_escape_state', 'FUNC_4': 'ush_read_echo_service'

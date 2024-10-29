@@ -1,0 +1,2 @@
+probability: 0.2520
+'IMPORT_0': 'gin-base/pkg/global', 'FUNC_0': 'Exception', 'FUNC_1': 'Sprintf', 'CLASS_0': 'string', 'FUNC_2': 'string', 'VAR_0': 'Project', 'VAR_1': 'RunMode', 'FUNC_3': 'ClientIP', 'VAR_2': 'Method', 'FUNC_4': 'Format', 'FUNC_5': 'Println', 'VAR_3': 'InternalServerError', 'FUNC_6': 'Next'

@@ -1,0 +1,62 @@
+#include <iostream>
+#include <IMPORT_0>
+#include <string.h>
+using namespace std;
+int VAR_0,VAR_1;
+int data;
+int tree[1005];
+char str[10][10];
+int lowbit(int VAR_2)
+{
+    return VAR_2&(-VAR_2);
+}
+void add(int VAR_2,int VAR_3)
+{
+    while(VAR_2<=VAR_0)
+    {
+        //printf("dddd\n");
+        tree[VAR_2]+=VAR_3;
+        VAR_2+=lowbit(VAR_2);
+    }
+}
+int sum(int VAR_2)
+{
+    int ans=0;
+    while(VAR_2>0)
+    {
+        ans+=tree[VAR_2];
+        VAR_2-=lowbit(VAR_2);
+    }
+    return ans;
+}
+
+int FUNC_0()
+{
+    while(scanf("%d%d",&VAR_0,&VAR_1)!=VAR_4)
+    {
+        int ans=0;
+        for(int VAR_2=1;VAR_2<=VAR_1;VAR_2++)
+        {
+            cin>>str[1]>>str[2]>>str[3]>>str[4]>>data;
+            //printf("%s %s %s %s %d\n",str[1],str[2],str[3],str[4],data);
+            if(str[3][0]=='r')
+                add(data+1,1);
+            if(str[3][0]=='l')
+            {
+                add(1,1);
+                add(data,-1);
+            }
+        }
+        //printf("ooo\n");
+        for(int VAR_2=1;VAR_2<=VAR_0;VAR_2++)
+        {
+            if(sum(VAR_2)==VAR_1)
+                ans++;
+        }
+        if(ans==0)
+            FUNC_1("-1\n");
+        else
+        FUNC_1("%d\n",ans);
+    }
+    return 0;
+}

@@ -1,0 +1,44 @@
+// make dshot dma packet, then fire
+void dshot_dma_start() {
+  uint32_t time = time_micros();
+  while ((dshot_dma_phase != 0 || spi_dma_is_ready(SPI_PORT1) == 0) && (time_micros() - time) < state.looptime * 1e6f)
+    ;
+  if (dshot_dma_phase != 0 || spi_dma_is_ready(SPI_PORT1) == 0)
+    return; 
+  for (uint8_t i = 0; i < 16; i++) {
+    motor_data_portA[i] = 0;
+    motor_data_portB[i] = 0;
+    motor_data_portC[i] = 0;
+#define MOTOR_PIN(port, pin, pin_af, timer, timer_channel)    \
+  if (!(dshot_packet[MOTOR_PIN_IDENT(port, pin)] & 0x8000)) { \
+    if (GPIO##port == GPIOA)                                  \
+      motor_data_portA[i] |= (LL_GPIO_PIN_##pin << 16);       \
+    else if (GPIO##port == GPIOB)                             \
+      motor_data_portB[i] |= (LL_GPIO_PIN_##pin << 16);       \
+    else if (GPIO##port == GPIOC)                             \
+      motor_data_portC[i] |= (LL_GPIO_PIN_##pin << 16);       \
+  }
+    MOTOR_PINS
+#undef MOTOR_PIN
+    dshot_packet[0] <<= 1;
+    dshot_packet[1] <<= 1;
+    dshot_packet[2] <<= 1;
+    dshot_packet[3] <<= 1;
+  }
+  for (int i = 1, j = 0; i < 48 && j < 16; i += 3, j++) {
+    portA_buffer[i] = motor_data_portA[j];
+    portB_buffer[i] = motor_data_portB[j];
+    portC_buffer[i] = motor_data_portC[j];
+  }
+  dshot_dma_phase = DSHOT_PORT_COUNT;
+  TIM1->ARR = DSHOT_BIT_TIME;
+  TIM1->CCR1 = 0;
+  TIM1->CCR2 = DSHOT_T0H_TIME;
+  TIM1->CCR3 = DSHOT_T1H_TIME;
+  if (DSHOT_GPIO_A == 1)
+    dshot_dma_portA();
+  else if (DSHOT_GPIO_B == 1)
+    dshot_dma_portB();
+  else if (DSHOT_GPIO_C == 1)
+    dshot_dma_portC();
+}

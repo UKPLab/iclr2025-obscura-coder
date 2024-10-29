@@ -1,0 +1,64 @@
+#ifndef VAR_0
+#define VAR_0
+
+#include <IMPORT_0>
+#include "IMPORT_1"
+#include "ScalarExpressionNode.hpp"
+
+namespace aslam {
+namespace backend {
+
+class Scalar : public ScalarExpressionNode, public CLASS_0 {
+  public:
+    enum { VAR_1 = 1 };
+
+    Scalar(const double& VAR_2);
+    virtual ~Scalar();
+
+    /// \brief Revert the last state update.
+    virtual void FUNC_0();
+
+    /// \brief Update the design variable.
+    virtual void FUNC_1(const double* VAR_3, int VAR_4);
+
+    /// \brief the size of an update step
+    virtual int FUNC_2() const;
+
+    CLASS_1 FUNC_3();
+
+    Eigen::CLASS_2 FUNC_4();
+
+  private:
+    virtual double toScalarImplementation() const;
+
+    virtual void FUNC_5(CLASS_3& VAR_5) const;
+
+    virtual void FUNC_5(CLASS_3& VAR_5,
+                                                 const Eigen::CLASS_2& VAR_6) const;
+
+    virtual void FUNC_6(DesignVariable::CLASS_4& VAR_7) const;
+
+    /// Returns the content of the design variable
+    virtual void FUNC_7(Eigen::CLASS_2& VAR_8) const;
+
+    /// Sets the content of the design variable
+    virtual void setParametersImplementation(const Eigen::CLASS_2& VAR_8);
+
+    /// Computes the minimal distance in tangent space between the current value of the DV and xHat
+    virtual void minimalDifferenceImplementation(const Eigen::CLASS_2& VAR_9, Eigen::CLASS_5& VAR_10) const;
+
+    /// Computes the minimal distance in tangent space between the current value of the DV and xHat and the jacobian
+    virtual void FUNC_8(const Eigen::CLASS_2& VAR_9, Eigen::CLASS_5& VAR_10,
+                                                            Eigen::CLASS_2& VAR_11) const;
+
+    /// \brief The current value of the design variable.
+    double _p;
+
+    /// \brief The previous version of the design variable.
+    double VAR_12;
+};
+
+}  // namespace backend
+}  // namespace aslam
+
+#endif /* ASLAM_BACKEND_SCALAR_POINT_HPP */

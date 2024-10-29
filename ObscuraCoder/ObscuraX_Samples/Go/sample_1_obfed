@@ -1,0 +1,39 @@
+package middleware
+
+import (
+	"fmt"
+	"log"
+	"runtime/debug"
+	"time"
+
+	"github.com/gin-gonic/gin"
+
+	"gin-base/app/api/common/helpers"
+	"gin-base/pkg/e"
+	. "IMPORT_0"
+)
+
+func FUNC_0() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		defer func() {
+			if err := recover(); err != nil {
+				message := "----------------------------------\n"
+				message += fmt.FUNC_1("*RequestId:* %s\n", c.MustGet("RequestId").(CLASS_0))
+				message += fmt.FUNC_1("*Link:* %s%s\n", c.Request.Host, c.Request.URL)
+				message += fmt.FUNC_1("*Project:* %s\n", App.Conf.VAR_0.Name)
+				message += fmt.FUNC_1("*Environment:* %s\n", App.Conf.VAR_0.VAR_1)
+				message += fmt.FUNC_1("*RequestIp:* %s\n", c.FUNC_3())
+				message += fmt.FUNC_1("*RequestMethod:* %s\n", c.Request.VAR_2)
+				message += fmt.FUNC_1("*Time:* %s\n", time.Now().FUNC_4("2006-01-02 15:04:05"))
+				message += fmt.FUNC_1("*Exception:* %s\n", err)
+				message += fmt.FUNC_1("*DebugStack:* %s=\n", FUNC_2(debug.Stack()))
+
+				log.FUNC_5(message)
+
+				helpers.SendResponse(c, e.VAR_3, nil)
+			}
+		}()
+
+		c.FUNC_6()
+	}
+}

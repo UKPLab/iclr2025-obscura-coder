@@ -1,0 +1,24 @@
+package IMPORT_0.dji.GSDemo.GoogleMap;
+
+import android.os.Bundle;
+import android.IMPORT_1.v7.app.AppCompatActivity;
+import android.content.IMPORT_2;
+import android.widget.TextView;
+
+/**
+ * Created by lasithniro on 1/4/17.
+**/
+
+public class showDetail extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.show_details);
+
+        TextView result = (TextView) findViewById(R.id.textView2);
+        TextView resultData = (TextView) findViewById(R.id.textView3);
+        IMPORT_2 VAR_0 = getIntent();
+        result.FUNC_0(VAR_0.getStringExtra("name"));
+        resultData.FUNC_0(VAR_0.getStringExtra("data"));
+    }
+}

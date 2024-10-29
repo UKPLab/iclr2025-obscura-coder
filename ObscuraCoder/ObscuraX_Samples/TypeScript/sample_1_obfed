@@ -1,0 +1,51 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastService } from IMPORT_0;
+import { IMPORT_1 } from '../api/services/user.service';
+import { Router } from '@angular/router';
+
+@Component({
+    selector: 'app-forgotpassword',
+    VAR_0: './forgotpassword.component.html',
+    VAR_1: ['./forgotpassword.component.scss']
+})
+export class ForgotpasswordComponent implements OnInit {
+    public isSubmitted: boolean;
+    public forgotpasswordForm: FormGroup;
+    constructor(
+        public VAR_2: Router,
+        private formBuilder: FormBuilder,
+        private toastService: ToastService,
+        private VAR_3: IMPORT_1
+    ) {}
+
+    FUNC_0(): void {
+        this.forgotpasswordForm = this.formBuilder.group({
+            email: ['', [Validators.VAR_4, Validators.email]]
+        });
+    }
+
+    get FUNC_1() {
+        return this.forgotpasswordForm.VAR_5;
+    }
+
+    onSubmit() {
+        this.isSubmitted = true;
+        if (this.forgotpasswordForm.VAR_6) {
+            return;
+        }
+        this.toastService.showLoading();
+        this.VAR_3
+            .FUNC_2(this.forgotpasswordForm)
+            .FUNC_3((data) => {
+                this.isSubmitted = false;
+                this.toastService.clearLoading();
+                if (data.VAR_7.code) {
+                    this.toastService.FUNC_4(data.VAR_7.VAR_8);
+                } else {
+                    this.toastService.success(data.VAR_7.VAR_8);
+                    this.VAR_2.FUNC_5(['/home']);
+                }
+            });
+    }
+}

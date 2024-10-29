@@ -1,0 +1,44 @@
+// make dshot dma packet, then fire
+void FUNC_0() {
+  uint32_t VAR_0 = FUNC_1();
+  while ((VAR_1 != 0 || FUNC_2(VAR_2) == 0) && (FUNC_1() - VAR_0) < VAR_3.VAR_4 * 1e6f)
+    ;
+  if (VAR_1 != 0 || FUNC_2(VAR_2) == 0)
+    return; 
+  for (uint8_t VAR_5 = 0; VAR_5 < 16; VAR_5++) {
+    VAR_6[VAR_5] = 0;
+    VAR_7[VAR_5] = 0;
+    VAR_8[VAR_5] = 0;
+#define FUNC_3(VAR_9, VAR_10, VAR_11, VAR_12, VAR_13)    \
+  if (!(dshot_packet[MOTOR_PIN_IDENT(port, pin)] & 0x8000)) { \
+    if (GPIO##port == GPIOA)                                  \
+      motor_data_portA[i] |= (LL_GPIO_PIN_##pin << 16);       \
+    else if (GPIO##port == GPIOB)                             \
+      motor_data_portB[i] |= (LL_GPIO_PIN_##pin << 16);       \
+    else if (GPIO##port == GPIOC)                             \
+      motor_data_portC[i] |= (LL_GPIO_PIN_##pin << 16);       \
+  }
+    CLASS_0
+#undef MOTOR_PIN
+    VAR_14[0] <<= 1;
+    VAR_14[1] <<= 1;
+    VAR_14[2] <<= 1;
+    VAR_14[3] <<= 1;
+  }
+  for (int VAR_5 = 1, VAR_15 = 0; VAR_5 < 48 && VAR_15 < 16; VAR_5 += 3, VAR_15++) {
+    VAR_16[VAR_5] = VAR_6[VAR_15];
+    VAR_17[VAR_5] = VAR_7[VAR_15];
+    VAR_18[VAR_5] = VAR_8[VAR_15];
+  }
+  VAR_1 = VAR_19;
+  VAR_20->VAR_21 = VAR_22;
+  VAR_20->VAR_23 = 0;
+  VAR_20->VAR_24 = DSHOT_T0H_TIME;
+  VAR_20->VAR_25 = DSHOT_T1H_TIME;
+  if (VAR_26 == 1)
+    FUNC_4();
+  else if (VAR_27 == 1)
+    FUNC_5();
+  else if (VAR_28 == 1)
+    FUNC_6();
+}
