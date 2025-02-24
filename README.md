@@ -3,7 +3,7 @@
 # ObscuraCoder: Powering Efficient Code LM Pre-Training Via Obfuscation Grounding
 
 [![arXiv](https://img.shields.io/badge/arXiv-2403.03894-b31b1b.svg)](https://arxiv.org/abs/2403.03894)
-[![ObscuraX on HuggingFace datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Datasets-ObscuraX-yellow?style=flat)](https://huggingface.co/datasets/UKPLab/ObscuraX)
+[![ObscuraX on HuggingFace datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Datasets-ObscuraX-yellow?style=flat)](https://huggingface.co/datasets/ObscuraCoder/ObscuraX)
 
 </div>
 
@@ -146,11 +146,11 @@ done
 >
 ## ObscuraX Dataset
 >
-The ObscuraX dataset comprises source code and onfuscated code pairs generated from accepted and de-duped programming contest solutions. The dataset is divided into language configs and mode splits. The language can be one of `C`, `C++`, `Go`, `Java`, `Python`, `Rust` and `TypeScript`, indicating the source files' languages. Once you have submitted an access request which has been approved, loading the dataset can be done as follows:
+The ObscuraX dataset comprises source code and onfuscated code pairs generated from accepted and de-duped programming contest solutions. The dataset is divided into language configs and mode splits. The language can be one of `c`, `cpp`, `go`, `java`, `python`, `rust` and `typescript`, indicating the source files' languages. Once you have submitted an access request which has been approved, loading the dataset can be done as follows:
 >
 ```python
 from datasets import load_dataset
-dataset = load_dataset("UKPLab/ObscuraX", "C")
+dataset = load_dataset("ObscuraX", "c")
 ```
 >
 >
