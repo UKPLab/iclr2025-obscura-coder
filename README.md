@@ -16,7 +16,7 @@ Contact person: [Indraneil Paul](mailto:indraneil.paul@tu-darmstadt.de)
 [UKP Lab](https://www.ukp.tu-darmstadt.de/) | [TU Darmstadt](https://www.tu-darmstadt.de/
 )
 
-This repo contains the code accompanying ICLR 25 submission ObscuraCoder.
+This repo contains the code accompanying ICLR 25 submission ObscuraCoder. It includes the instructions for loading the ObscuraX dataset, the evaluation sandbox recipes, the code for continued pre-training and the zero-shot tasks evaluation. We also package our custom obfuscator whcih we used to create ObscuraX.
 
 ## Setup and Workflow
 
