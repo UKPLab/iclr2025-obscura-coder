@@ -2,7 +2,7 @@
 
 # ObscuraCoder: Powering Efficient Code LM Pre-Training Via Obfuscation Grounding
 
-[![arXiv](https://img.shields.io/badge/arXiv-2403.03894-b31b1b.svg)](https://arxiv.org/abs/2403.03894)
+[![arXiv](https://img.shields.io/badge/arXiv-2504.00019-b31b1b.svg)](https://arxiv.org/abs/2504.00019)
 [![ObscuraX on HuggingFace datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Datasets-ObscuraX-yellow?style=flat)](https://huggingface.co/datasets/ObscuraCoder/ObscuraX)
 
 </div>
@@ -16,11 +16,11 @@ Contact person: [Indraneil Paul](mailto:indraneil.paul@tu-darmstadt.de)
 [UKP Lab](https://www.ukp.tu-darmstadt.de/) | [TU Darmstadt](https://www.tu-darmstadt.de/
 )
 
-This repo contains the code accompanying ICLR 25 submission ObscuraCoder. It includes the instructions for loading the ObscuraX dataset, the evaluation sandbox recipes, the code for continued pre-training and the zero-shot tasks evaluation. We also package our custom obfuscator whcih we used to create ObscuraX.
+This repo contains the code accompanying the ICLR 25 submission ObscuraCoder. It includes the instructions for loading the ObscuraX dataset, the evaluation sandbox recipes, the code for continued pre-training and the evaluation of zero-shot tasks. We also package our custom obfuscator, which we used to create ObscuraX.
 
 ## Setup and Workflow
 
-For the stages involving evaluation, one can setup the evaluation sandboxed environment using the following commands:
+For the stages involving evaluation, one can set up the evaluation sandboxed environment using the following commands:
 >
 ```bash
 docker build -t obscuracoder-evaluation:latest - < Dockerfiles/RECIPE_NAME.Dockerfile
@@ -85,9 +85,9 @@ accelerate launch --num_processes=4 --main_process_port=29699 Train_Code+Utiliti
 >
 ## Zero-shot Tasks Evaluation
 
-We take inspiration from the [vllm-code-harness](https://github.com/iNeil77/vllm-code-harness) library to run the zero-shot tasks evaluation. This allows us to speed up evaluations thus allowing for the extensive experiments in the paper.
+We take inspiration from the [vllm-code-harness](https://github.com/iNeil77/vllm-code-harness) library to run the zero-shot tasks evaluation. This allows us to speed up evaluations, thus allowing for the extensive experiments in the paper.
 >
-We provide the code to run the zero-shot tasks evaluation. The script is located in the `Evaluation_Scripts` directory. The tasks include CodeXGLUE code to text, Multipl-E, HumanEvalPack-FixDocs and ReCode. We scripts are named `codexglue_code_to_text.sh`, `multipl_e.sh`, `huma_eval_pack_fixdocs.sh` and `recode.sh` respectively. The scripts already have the hyperparameters used in the paper and are designed to be run directly. For example, to run the CodeXGLUE code to text task, run the following command:
+We provide the code to run the evaluation of zero-shot tasks. The script is located in the `Evaluation_Scripts` directory. The tasks include CodeXGLUE code to text, Multipl-E, HumanEvalPack-FixDocs and ReCode. Our scripts are named `codexglue_code_to_text.sh`, `multipl_e.sh`, `huma_eval_pack_fixdocs.sh` and `recode.sh`, respectively. The scripts already have the hyperparameters used in the paper and are designed to be run directly. For example, to run the CodeXGLUE code to text task, run the following command:
 >
 ```bash
 ./Train+Inference_Scripts/Commit_Chronicle.sh
@@ -146,7 +146,7 @@ done
 >
 ## ObscuraX Dataset
 >
-The ObscuraX dataset comprises source code and onfuscated code pairs generated from accepted and de-duped programming contest solutions. The dataset is divided into language configs and mode splits. The language can be one of `c`, `cpp`, `go`, `java`, `python`, `rust` and `typescript`, indicating the source files' languages. Once you have submitted an access request which has been approved, loading the dataset can be done as follows:
+The ObscuraX dataset comprises source code and obfuscated code pairs generated from accepted and de-duped programming contest solutions. The dataset is divided into language configs and mode splits. The language can be one of `c`, `cpp`, `go`, `java`, `python`, `rust` and `typescript`, indicating the source files' languages. Once you have submitted an access request which has been approved, loading the dataset can be done as follows:
 >
 ```python
 from datasets import load_dataset
@@ -166,10 +166,10 @@ This repository contains experimental software and is published for the sole pur
   title = {ObscuraCoder: Powering Efficient Code LM Pre-Training Via Obfuscation Grounding},
   author = {Paul, Indraneil and Yang, Haoyi and Glava\v{s}, Goran and Kersting, Kristian and Gurevych, Iryna},
   year = 2025,
-  month = feb,
+  month = apr,
   journal = {arXiv preprint},
-  url = {https://arxiv.org/abs/xxxx.xxxxx},
-  eprint = {xxxx.xxxxx},
+  url = {https://arxiv.org/abs/2504.00019},
+  eprint = {2504.00019},
   archiveprefix = {arXiv},
   primaryclass = {cs.AI},
 }
