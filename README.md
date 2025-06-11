@@ -30,7 +30,7 @@ docker run -it --gpus all --name obscuracoder-evaluation obscuracoder-evaluation
 >
 ## Continued Pre-Training
 
-We provide the code to run the continued pre-training of the IR-based models. The script is located in the `Train_Code+Utilities` directory. It requires a HuggingFace dataset and a HuggingFace model to run. Create a pairwise dataset of source code and obfuscated code and upload it to the HuggingFace datasets.
+We provide the code to run the continued pre-training of the CLM models. The script is located in the `Train_Code+Utilities` directory. It requires a HuggingFace dataset and a HuggingFace model to run. Create a pairwise dataset of source code and obfuscated code and upload it to the HuggingFace datasets.
 >
 The script is named `Continued_Pretrain.py`. The script is designed to be run as follows:
 >
